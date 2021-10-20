@@ -24,7 +24,7 @@ class _StepperPageState extends State<StepperPage> {
             child: Image.asset("assets/images/completed.jpg"),
           ),
         ),
-        RaisedButton(onPressed: (){
+        ElevatedButton(onPressed: (){
           setState(() {
             isCompleted = false;
             currentStep=0;
@@ -72,7 +72,7 @@ class _StepperPageState extends State<StepperPage> {
           steps: getSteps(),
           currentStep: currentStep,
           controlsBuilder: (context, {onStepContinue, onStepCancel}) {
-            final isLastStep = currentStep == getSteps().length - 1;
+            // final isLastStep = currentStep == getSteps().length - 1;
 
             return Container(
               margin: const EdgeInsets.only(top: 50),
@@ -155,7 +155,39 @@ class _StepperPageState extends State<StepperPage> {
           state: currentStep > 0 ? StepState.complete : StepState.disabled,
           isActive: currentStep >= 1,
           title: const Text("Address"),
-          content: Container(),
+          content: Column(
+            children: [
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: postCodeController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  labelText: "Post Code",
+                  hintText: 'Post Code',
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                validator: (value){
+                  if(value==null || value.isEmpty){
+                    return "Please enter a text";
+                  }
+                  return null;
+                },
+                controller: postCodeController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  labelText: "Street",
+                  hintText: 'Street',
+                ),
+              ),
+              SizedBox(height: 10),
+            ],
+          ),
         ),
         Step(
           state: currentStep > 0 ? StepState.complete : StepState.disabled,
